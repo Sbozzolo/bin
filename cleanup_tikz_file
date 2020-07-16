@@ -1,0 +1,52 @@
+#!/bin/sh
+
+usage() {
+cat << EOF
+LaTeX engines have strong memory limitations, and sometimes it is not possible
+to compile TikZ figures. To work around this, one can reduce the density of
+points and reduce the precision of their numerical representation.
+
+$(basename $0) takes a file as input, detects lines with two numbers (the data),
+and keeps only one every N. All the data is put in scientific notation with
+precition of 4.
+
+If the file is not supplied, text is read from STDIO. If N is not provided,
+all the data is kept but it is still re-printed in scientific notation.
+
+Usage: $(basename $0) {N} {file}
+EOF
+}
+
+MIN_ARGS=1
+
+# We detect data line with awk
+# If a line has only two fields, and they are both numbers, then it is data
+cleanup(){
+    awk -v N="$1" '{
+    num1=$1/1;
+    num2=$2/1;
+    if (num1 == $1 && num2 == $2 && NF == 2){
+       if (NR % N == 0)
+         printf "%.4e %.4e\n", $1, $2
+    } else {
+       print $0
+    }}' $2
+}
+
+if [ $# -lt $MIN_ARGS ]
+then
+  usage
+  exit
+else
+    if [ $# -eq 1 ]
+    then
+      if [ -e "$1" ]
+      then
+        cleanup 1 "$1"
+      else
+        cleanup "$1" -
+      fi
+    else
+      cleanup $@
+    fi
+fi
