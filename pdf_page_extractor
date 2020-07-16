@@ -1,0 +1,23 @@
+#!/bin/sh
+
+usage() {
+  echo "Extract a subset of pages from a PDF"
+  echo "Usage: $(basename $0) {first page} {last page} {input pdf file} {output pdf file}"
+}
+
+extract() {
+  gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER \
+     -dFirstPage=$1 -dLastPage=$2 \
+     -sOutputFile=$4 $3
+}
+
+
+EXPECTED_ARGS=4
+
+if [ $# -ne $EXPECTED_ARGS ]
+then
+  usage
+  exit
+else
+  extract $1 $2 $3 $4
+fi

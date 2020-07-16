@@ -30,3 +30,11 @@ Concatenate multiple PDF files
 Usage: merge_pdfs {first pdf file} {second pdf file} ... {output pdf file}
 ```
 `merge_pdfs` requires Ghostscript.
+
+## pdf_page_extractor
+
+```
+Extract a subset of pages from a PDF
+Usage: pdf_page_extractor {first page} {last page} {input pdf file} {output pdf file}
+```
+`pdf_page_extractor` requires Ghostscript.
