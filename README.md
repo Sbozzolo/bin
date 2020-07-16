@@ -5,5 +5,13 @@
 [![GPLv3
 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 
+## cleanup_tikz_file
 
-Collection of useful scripts
+
+## merge_pdfs
+
+```
+Concatenate multiple PDF files
+Usage: merge_pdfs {first pdf file} {second pdf file} ... {output pdf file}
+```
+`merge_pdfs` requires Ghostscript.
