@@ -5,6 +5,14 @@
 [![GPLv3
 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 
+# Installation
+
+Clone this repository and add the folder to your `PATH` environmental variable.
+Alternatively, select those scripts you are interested in and move them in your
+`bin` folder.
+
+# Scripts
+
 ## cleanup_tikz_file
 
 ```
@@ -18,7 +26,6 @@ precition of 4.
 
 If the file is not supplied, text is read from STDIO. If N is not provided,
 all the data is kept but it is still re-printed in scientific notation.
-
 
 Usage: cleanup_tikz_file takes {N} {file}
 ```
