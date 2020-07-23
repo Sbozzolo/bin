@@ -1,0 +1,25 @@
+#!/bin/sh
+
+usage() {
+  echo "Check if the argument is an existing file."
+  echo "If yes, print the input argument, if not, print - (for STDIN)."
+  echo "This utility is meant to be used as part of other scripts,"
+  echo "so that they can handle file and STDIN inputs."
+  echo "Usage: $(basename $0) {arg}"
+}
+
+NUM_ARGS=2
+
+if [ $# -eq $NUM_ARGS ]
+then
+  usage
+  exit
+else
+  if [ -e "$1" ]
+  then
+    echo "$1"
+  else
+    echo "-"
+  fi
+
+fi

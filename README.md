@@ -30,6 +30,16 @@ all the data is kept but it is still re-printed in scientific notation.
 Usage: cleanup_tikz_file takes {N} {file}
 ```
 
+## file_or_stdin
+
+```
+Check if the argument is an existing file.
+If yes, print the input argument, if not, print - (for STDIN).
+This utility is meant to be used as part of other scripts,
+so that they can handle file and STDIN inputs.
+Usage: file_or_stdin {arg}"
+```
+
 ## merge_pdfs
 
 ```
@@ -37,6 +47,29 @@ Concatenate multiple PDF files
 Usage: merge_pdfs {first pdf file} {second pdf file} ... {output pdf file}
 ```
 `merge_pdfs` requires Ghostscript.
+
+## pick
+
+`pick` is a wrapper around `gawk` to easily select columns from a file
+or from standard input. For example, to select the 2nd and 4th column 
+of file `file`:
+```
+pick 2 4 file
+```
+as opposed to 
+```
+awk '{print $2, $4}' file
+```
+or 
+
+```
+cut -d" " -f2,4 file
+```
+`pick` is meant to be low-friction.
+```
+Select columns from a file or STDIN
+Usage: pick {column number 1} {column number 2} ... {file}
+```
 
 ## pdf_page_extractor
 

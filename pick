@@ -1,0 +1,47 @@
+#!/bin/sh
+
+usage() {
+    echo "Select columns from a file or STDIN"
+    echo "Usage: $(basename $0) {column number 1} {column number 2} ... {file}"
+}
+
+pick() {
+    # Take the last value in the list of passed arguments
+    last_arg=$(echo $@ | awk '{print $NF}')
+    input=$(file_or_stdin "$last_arg")
+
+    # If input is not STDIN, then the last argument was a file name,
+    # we don't want that in our column list
+    if [ ! "$input" = "-" ]
+    then
+       # Remove the last value in the list of passed arguments
+       columns=$(echo $@ | awk '{$NF=""; print $0}')
+    else
+        columns=$(echo $@)
+    fi
+
+    # Now we have the input file and the list of columns
+    # The list of columns looks like 1 2 3 4
+
+    # We pass this list ot awk. Then, we use the split function to convert the
+    # colmuns variable to an awk array 'awk_columns'. If we prepend '$', then
+    # that will print the respective column. So, we loop over the variables in
+    # `awk_cols` and print $c. We use printf to avoid the newlines, but at the
+    # end, we print and empty string to add a new line. echo "$columns"
+    awk -v cols="$columns" \
+    '{split(cols, awk_cols); \
+      for (c in awk_cols) \
+          printf "%s ", $awk_cols[c]; \
+      print ""}' "$input"
+}
+
+MIN_ARGS=1
+
+if [ $# -lt $MIN_ARGS ]
+then
+  usage
+  exit
+else
+    # Pass the arguments to pick
+    pick $@
+fi
